@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface TeamInfoContentView : UIView
-
+- (void) popupDetailViewAnimation;
+- (void) hidDetailViewAnimation;
 @end

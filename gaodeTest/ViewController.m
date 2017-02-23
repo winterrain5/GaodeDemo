@@ -27,7 +27,8 @@
 - (TeamInfoContentView *)teamInfoView {
     if (_teamInfoView == nil) {
         _teamInfoView = [[TeamInfoContentView alloc] init];
-        _teamInfoView.frame = CGRectMake(0, 64, MainScreenW, 150);
+        _teamInfoView.frame = CGRectMake(0, 64, MainScreenW, 190);
+        
     }
     return _teamInfoView;
 }
@@ -87,6 +88,8 @@
     
     // 添加固定标注
     [self addtMoveAnotationView];
+    
+    [self.view addSubview:self.teamInfoView];
 
 }
 
@@ -188,7 +191,16 @@
 
 }
 #pragma mark ----- MAmapViewDelegate 
-
+/**
+ * @brief 地图将要发生移动时调用此接口
+ * @param mapView       地图view
+ * @param wasUserAction 标识是否是用户动作
+ */
+- (void)mapView:(MAMapView *)mapView mapWillMoveByUser:(BOOL)wasUserAction {
+    if (wasUserAction) {
+        [self.teamInfoView hidDetailViewAnimation];
+    }
+}
 /**
  * @brief 地图移动结束后调用此接口
  * @param mapView       地图view
@@ -198,6 +210,16 @@
     if (wasUserAction) {
         
         NSLog(@"move end latitude == %f , longitude == %f",self.moveAnnotation.coordinate.latitude,self.moveAnnotation.coordinate.longitude);
+    }
+}
+/**
+ * @brief 地图将要发生缩放时调用此接口
+ * @param mapView       地图view
+ * @param wasUserAction 标识是否是用户动作
+ */
+- (void)mapView:(MAMapView *)mapView mapWillZoomByUser:(BOOL)wasUserAction {
+    if (wasUserAction) {
+        [self.teamInfoView hidDetailViewAnimation];
     }
 }
 /**
@@ -256,6 +278,7 @@
     if ([view isKindOfClass:[CustomAnnotationView class]]) {
         CustomAnnotationView *annotationView = (CustomAnnotationView *) view;
         [annotationView startAnimation];
+        [self.teamInfoView popupDetailViewAnimation];
         if ([annotationView.annotation isKindOfClass:[CustomAnnotation class]]) {
             
             CustomAnnotation *ann = (CustomAnnotation *) annotationView.annotation;
