@@ -19,6 +19,10 @@
 @property (nonatomic, strong) UIButton *gpsButton;
 /// 固定的标注
 @property (nonatomic, strong) MAPointAnnotation *moveAnnotation;
+/// 选中的标注
+@property (nonatomic, strong) CustomAnnotationView *selectedCustomAnnView;
+/// 取消了选中的标注
+@property (nonatomic, strong) CustomAnnotationView *deslectedCustomAnnView;
 /// 团队详情视图
 @property (nonatomic, strong) TeamInfoContentView *teamInfoView;
 @end
@@ -198,7 +202,11 @@
  */
 - (void)mapView:(MAMapView *)mapView mapWillMoveByUser:(BOOL)wasUserAction {
     if (wasUserAction) {
+        // 隐藏详情view
         [self.teamInfoView hidDetailViewAnimation];
+        
+        // 取消之前选中的标注
+        [self.selectedCustomAnnView stopAnimation];
     }
 }
 /**
@@ -222,6 +230,7 @@
         [self.teamInfoView hidDetailViewAnimation];
     }
 }
+
 /**
  * @brief 根据anntation生成对应的View
  * @param mapView 地图View
@@ -277,11 +286,18 @@
 - (void)mapView:(MAMapView *)mapView didSelectAnnotationView:(MAAnnotationView *)view {
     if ([view isKindOfClass:[CustomAnnotationView class]]) {
         CustomAnnotationView *annotationView = (CustomAnnotationView *) view;
-        [annotationView startAnimation];
-        [self.teamInfoView popupDetailViewAnimation];
+        
         if ([annotationView.annotation isKindOfClass:[CustomAnnotation class]]) {
             
             CustomAnnotation *ann = (CustomAnnotation *) annotationView.annotation;
+            
+            self.selectedCustomAnnView = annotationView;
+            // 标注动画
+            [annotationView startAnimation];
+            // 详情动画
+            [self.teamInfoView popupDetailViewAnimation];
+            // 重新设置中心点
+            [self.mapView setCenterCoordinate:ann.coordinate animated:YES];
             
             NSLog(@"点击了 %@",ann.imagePath);
         }
@@ -323,5 +339,33 @@
  */
 - (void)mapViewDidStopLocatingUser:(MAMapView *)mapView {
     NSLog(@"定位结束");
+}
+
+/**
+ * @brief 定位失败后，会调用此函数
+ * @param mapView 地图View
+ * @param error 错误号，参考CLError.h中定义的错误号
+ */
+- (void)mapView:(MAMapView *)mapView didFailToLocateUserWithError:(NSError *)error {
+    NSLog(@"定位失败 error == %@", error);
+}
+
+/**
+ * @brief 单击地图回调，返回经纬度
+ * @param mapView 地图View
+ * @param coordinate 经纬度
+ */
+- (void)mapView:(MAMapView *)mapView didSingleTappedAtCoordinate:(CLLocationCoordinate2D)coordinate {
+    [self.teamInfoView hidDetailViewAnimation];
+}
+
+#pragma mark ----- 工具方法
+- (CGSize)offsetToContainRect:(CGRect)innerRect inRect:(CGRect)outerRect
+{
+    CGFloat nudgeRight = fmaxf(0, CGRectGetMinX(outerRect) - (CGRectGetMinX(innerRect)));
+    CGFloat nudgeLeft = fminf(0, CGRectGetMaxX(outerRect) - (CGRectGetMaxX(innerRect)));
+    CGFloat nudgeTop = fmaxf(0, CGRectGetMinY(outerRect) - (CGRectGetMinY(innerRect)));
+    CGFloat nudgeBottom = fminf(0, CGRectGetMaxY(outerRect) - (CGRectGetMaxY(innerRect)));
+    return CGSizeMake(nudgeLeft ?: nudgeRight, nudgeTop ?: nudgeBottom);
 }
 @end

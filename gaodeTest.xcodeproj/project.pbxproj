@@ -419,8 +419,6 @@
 		2529796C1E5D709700B74C74 /* xh_dw_ic_az_pr@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2529795D1E5D709700B74C74 /* xh_dw_ic_az_pr@3x.png */; };
 		2529796D1E5D709700B74C74 /* xh_dq_zb_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2529795E1E5D709700B74C74 /* xh_dq_zb_bg@2x.png */; };
 		2529796E1E5D709800B74C74 /* xh_dq_zb_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2529795F1E5D709700B74C74 /* xh_dq_zb_bg@3x.png */; };
-		252979721E5D70CE00B74C74 /* JSBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 252979711E5D70CE00B74C74 /* JSBadgeView.m */; };
-		252979751E5D70DA00B74C74 /* UIView+AddBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 252979741E5D70DA00B74C74 /* UIView+AddBadgeView.m */; };
 		252979781E5D710E00B74C74 /* CustomAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 252979771E5D710E00B74C74 /* CustomAnnotation.m */; };
 		2529797B1E5D72AD00B74C74 /* CustomAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2529797A1E5D72AD00B74C74 /* CustomAnnotationView.m */; };
 		2540E2291E5E719400EFC9E9 /* D3View.m in Sources */ = {isa = PBXBuildFile; fileRef = 2540E2281E5E719400EFC9E9 /* D3View.m */; };
@@ -428,6 +426,8 @@
 		2540E22E1E5E785C00EFC9E9 /* pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 2540E22D1E5E785C00EFC9E9 /* pin.png */; };
 		2540E2301E5E888400EFC9E9 /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2540E22F1E5E888400EFC9E9 /* Reveal.framework */; };
 		2540E2321E5E889D00EFC9E9 /* libz.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2540E2311E5E889D00EFC9E9 /* libz.1.tbd */; };
+		2540E2471E5EBA8D00EFC9E9 /* CustomCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2540E2461E5EBA8D00EFC9E9 /* CustomCollectionViewCell.m */; };
+		2540E24A1E5EBB9700EFC9E9 /* CustomCellFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2540E2491E5EBB9700EFC9E9 /* CustomCellFlowLayout.m */; };
 		F6B25E6A7E2F8F5CE1F4A8CD /* libPods-gaodeTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D5B1F24A6D6ACDB156896737 /* libPods-gaodeTest.a */; };
 /* End PBXBuildFile section */
 
@@ -852,10 +852,6 @@
 		2529795D1E5D709700B74C74 /* xh_dw_ic_az_pr@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xh_dw_ic_az_pr@3x.png"; sourceTree = "<group>"; };
 		2529795E1E5D709700B74C74 /* xh_dq_zb_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xh_dq_zb_bg@2x.png"; sourceTree = "<group>"; };
 		2529795F1E5D709700B74C74 /* xh_dq_zb_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xh_dq_zb_bg@3x.png"; sourceTree = "<group>"; };
-		252979701E5D70CE00B74C74 /* JSBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSBadgeView.h; sourceTree = "<group>"; };
-		252979711E5D70CE00B74C74 /* JSBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSBadgeView.m; sourceTree = "<group>"; };
-		252979731E5D70DA00B74C74 /* UIView+AddBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+AddBadgeView.h"; sourceTree = "<group>"; };
-		252979741E5D70DA00B74C74 /* UIView+AddBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+AddBadgeView.m"; sourceTree = "<group>"; };
 		252979761E5D710E00B74C74 /* CustomAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAnnotation.h; sourceTree = "<group>"; };
 		252979771E5D710E00B74C74 /* CustomAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnnotation.m; sourceTree = "<group>"; };
 		252979791E5D72AD00B74C74 /* CustomAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAnnotationView.h; sourceTree = "<group>"; };
@@ -867,6 +863,10 @@
 		2540E22D1E5E785C00EFC9E9 /* pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin.png; sourceTree = "<group>"; };
 		2540E22F1E5E888400EFC9E9 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
 		2540E2311E5E889D00EFC9E9 /* libz.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.tbd; path = usr/lib/libz.1.tbd; sourceTree = SDKROOT; };
+		2540E2451E5EBA8D00EFC9E9 /* CustomCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCollectionViewCell.h; sourceTree = "<group>"; };
+		2540E2461E5EBA8D00EFC9E9 /* CustomCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCollectionViewCell.m; sourceTree = "<group>"; };
+		2540E2481E5EBB9700EFC9E9 /* CustomCellFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCellFlowLayout.h; sourceTree = "<group>"; };
+		2540E2491E5EBB9700EFC9E9 /* CustomCellFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCellFlowLayout.m; sourceTree = "<group>"; };
 		D5B1F24A6D6ACDB156896737 /* libPods-gaodeTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-gaodeTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D963EAC56C470402AB2D35D9 /* Pods-gaodeTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gaodeTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-gaodeTest/Pods-gaodeTest.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -906,6 +906,7 @@
 		2529761B1E5D391E00B74C74 /* gaodeTest */ = {
 			isa = PBXGroup;
 			children = (
+				2540E22F1E5E888400EFC9E9 /* Reveal.framework */,
 				2529796F1E5D70B400B74C74 /* CustomAnnotationView */,
 				252976391E5D41FA00B74C74 /* Resources */,
 				252976371E5D41D400B74C74 /* AMap.bundle */,
@@ -1421,21 +1422,36 @@
 		2529796F1E5D70B400B74C74 /* CustomAnnotationView */ = {
 			isa = PBXGroup;
 			children = (
-				2540E22F1E5E888400EFC9E9 /* Reveal.framework */,
+				2540E2341E5EB17500EFC9E9 /* TeamInfoView */,
+				2540E2331E5EB15900EFC9E9 /* CustomAnnotationView */,
 				2540E2271E5E719400EFC9E9 /* D3View.h */,
 				2540E2281E5E719400EFC9E9 /* D3View.m */,
-				252979731E5D70DA00B74C74 /* UIView+AddBadgeView.h */,
-				252979741E5D70DA00B74C74 /* UIView+AddBadgeView.m */,
-				252979701E5D70CE00B74C74 /* JSBadgeView.h */,
-				252979711E5D70CE00B74C74 /* JSBadgeView.m */,
+			);
+			name = CustomAnnotationView;
+			sourceTree = "<group>";
+		};
+		2540E2331E5EB15900EFC9E9 /* CustomAnnotationView */ = {
+			isa = PBXGroup;
+			children = (
 				252979761E5D710E00B74C74 /* CustomAnnotation.h */,
 				252979771E5D710E00B74C74 /* CustomAnnotation.m */,
 				252979791E5D72AD00B74C74 /* CustomAnnotationView.h */,
 				2529797A1E5D72AD00B74C74 /* CustomAnnotationView.m */,
-				2540E22A1E5E733500EFC9E9 /* TeamInfoContentView.h */,
-				2540E22B1E5E733500EFC9E9 /* TeamInfoContentView.m */,
 			);
 			name = CustomAnnotationView;
+			sourceTree = "<group>";
+		};
+		2540E2341E5EB17500EFC9E9 /* TeamInfoView */ = {
+			isa = PBXGroup;
+			children = (
+				2540E22A1E5E733500EFC9E9 /* TeamInfoContentView.h */,
+				2540E22B1E5E733500EFC9E9 /* TeamInfoContentView.m */,
+				2540E2451E5EBA8D00EFC9E9 /* CustomCollectionViewCell.h */,
+				2540E2461E5EBA8D00EFC9E9 /* CustomCollectionViewCell.m */,
+				2540E2481E5EBB9700EFC9E9 /* CustomCellFlowLayout.h */,
+				2540E2491E5EBB9700EFC9E9 /* CustomCellFlowLayout.m */,
+			);
+			name = TeamInfoView;
 			sourceTree = "<group>";
 		};
 		570DD451CF60AEFE0B284815 /* Pods */ = {
@@ -1986,13 +2002,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				252976241E5D391E00B74C74 /* ViewController.m in Sources */,
-				252979751E5D70DA00B74C74 /* UIView+AddBadgeView.m in Sources */,
 				2540E2291E5E719400EFC9E9 /* D3View.m in Sources */,
+				2540E24A1E5EBB9700EFC9E9 /* CustomCellFlowLayout.m in Sources */,
 				2540E22C1E5E733500EFC9E9 /* TeamInfoContentView.m in Sources */,
 				2529797B1E5D72AD00B74C74 /* CustomAnnotationView.m in Sources */,
 				252976211E5D391E00B74C74 /* AppDelegate.m in Sources */,
 				2529761E1E5D391E00B74C74 /* main.m in Sources */,
-				252979721E5D70CE00B74C74 /* JSBadgeView.m in Sources */,
+				2540E2471E5EBA8D00EFC9E9 /* CustomCollectionViewCell.m in Sources */,
 				252979781E5D710E00B74C74 /* CustomAnnotation.m in Sources */,
 				252979501E5D62A300B74C74 /* FirstViewController.m in Sources */,
 			);

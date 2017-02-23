@@ -8,23 +8,38 @@
 
 #import "TeamInfoContentView.h"
 #import "D3View.h"
-
-
-#define KContentViewH 180
+#define KContentViewH 190
 @interface TeamInfoContentView()
 
 @property (nonatomic,weak) UIView *contentView;
 
+
+@property (nonatomic, strong) NSMutableArray *dataArray;
+
 @end
 @implementation TeamInfoContentView
-
+- (NSMutableArray *)dataArray {
+    if (_dataArray == nil) {
+        _dataArray = [NSMutableArray array];
+        for (int index = 0; index < 5; index++) {
+            NSString *imageName = [NSString stringWithFormat:@"Yosemite%02d",index];
+            UIImage *image = [UIImage imageNamed:imageName];
+            [_dataArray addObject:image];
+        }
+        
+    }
+    return _dataArray;
+}
 - (instancetype)init {
     if (self = [super init]) {
         self.backgroundColor = [UIColor clearColor];
+        
         UIView *contentView = [[UIView alloc] init];
-        self.contentView = contentView;
         contentView.backgroundColor = [UIColor blueColor];
+        self.contentView = contentView;
         [self addSubview:contentView];
+        
+        
     }
     return self;
 }
@@ -32,7 +47,7 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.contentView.frame = CGRectMake(10, -KContentViewH, MainScreenW - 20, KContentViewH);
+    self.contentView.frame = CGRectMake(0, -KContentViewH, MainScreenW, KContentViewH);
 }
 
 
@@ -46,10 +61,12 @@
     [view pop_addAnimation:popSpring forKey:@"positionY"];
 }
 
+
+#pragma mark ----- 外部方法
 - (void) popupDetailViewAnimation {
     self.hidden = NO;
     if (-KContentViewH == self.contentView.layer.frame.origin.y) {
-        [self popAnimationWithView:self.contentView offset:KContentViewH + 10];
+        [self popAnimationWithView:self.contentView offset:KContentViewH];
     }
 }
 
