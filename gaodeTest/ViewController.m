@@ -10,7 +10,7 @@
 #import "CustomAnnotation.h"
 #import "CustomAnnotationView.h"
 #import "TeamInfoContentView.h"
-@interface ViewController ()<MAMapViewDelegate,CLLocationManagerDelegate>
+@interface ViewController ()<MAMapViewDelegate,CLLocationManagerDelegate,TeamInfoContentViewDelegate>
 /**标注数组*/
 @property (nonatomic, strong) NSArray *anns;
 /// 地图控件
@@ -28,11 +28,17 @@
 @end
 
 @implementation ViewController
+- (NSArray *)anns {
+    if (_anns == nil) {
+        _anns = [NSMutableArray array];
+    }
+    return _anns;
+}
 - (TeamInfoContentView *)teamInfoView {
     if (_teamInfoView == nil) {
         _teamInfoView = [[TeamInfoContentView alloc] init];
         _teamInfoView.frame = CGRectMake(0, 64, MainScreenW, 190);
-        
+        _teamInfoView.delegate = self;
     }
     return _teamInfoView;
 }
@@ -58,7 +64,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.mapView showAnnotations:self.anns animated:YES];
+//    [self.mapView showAnnotations:self.anns animated:YES];
 }
 
 
@@ -77,6 +83,8 @@
     [self.mapView setZoomLevel:15 animated:YES];
     // 设置trackingMode 则会自动定位到自己的位置
     self.mapView.userTrackingMode = MAUserTrackingModeFollow;
+    // 是否允许对annotationView根据zIndex进行排序
+    self.mapView.allowsAnnotationViewSorting = YES;
     // 隐藏罗盘
     self.mapView.showsCompass = NO;
     // 隐藏比例尺
@@ -94,6 +102,7 @@
     [self addtMoveAnotationView];
     
     [self.view addSubview:self.teamInfoView];
+    
 
 }
 
@@ -125,7 +134,17 @@
     five.imagePath = @"smile.jpg";
     five.coordinate = CLLocationCoordinate2DMake(31.342346, 121.376681);
     
+    
+    self.anns = @[one,two,three,four,five];
     [self.mapView addAnnotations:@[one,two,three,four,five]];
+    
+    NSMutableArray *dataarray = [NSMutableArray array];
+    for (int index = 0; index < self.mapView.annotations.count-1; index++) {
+        NSString *imageName = [NSString stringWithFormat:@"Yosemite%02d",index];
+        UIImage *image = [UIImage imageNamed:imageName];
+        [dataarray addObject:image];
+    }
+    self.teamInfoView.dataArray = dataarray;
     return @[one,two,three,four,five];
     
 }
@@ -252,8 +271,6 @@
         //很重要的，配置关联的模型数据
         cusAnnotationView.annotation = cusAnnotation;
         
-        [self.mapView selectAnnotation:self.anns[0] animated:YES];
-        
         return cusAnnotationView;
     } else if ([annotation isKindOfClass:[MAPointAnnotation class]]) {
         static NSString *userLocationID = @"lockLocation";
@@ -289,17 +306,21 @@
         
         if ([annotationView.annotation isKindOfClass:[CustomAnnotation class]]) {
             
+            // pageView滚动到指定页
+            NSInteger index = (NSInteger)[self.anns indexOfObject:self.mapView.selectedAnnotations[0]];
+            
             CustomAnnotation *ann = (CustomAnnotation *) annotationView.annotation;
             
             self.selectedCustomAnnView = annotationView;
             // 标注动画
             [annotationView startAnimation];
             // 详情动画
-            [self.teamInfoView popupDetailViewAnimation];
+            [self.teamInfoView popupDetailViewAnimation:index];
             // 重新设置中心点
             [self.mapView setCenterCoordinate:ann.coordinate animated:YES];
             
-            NSLog(@"点击了 %@",ann.imagePath);
+//            [self.teamInfoView scrollPageViewToIndex:index-1 animated:NO];
+            NSLog(@"%@ %@ %ld",self.anns,self.mapView.selectedAnnotations,(long)index);
         }
         
     }
@@ -359,13 +380,16 @@
     [self.teamInfoView hidDetailViewAnimation];
 }
 
-#pragma mark ----- 工具方法
-- (CGSize)offsetToContainRect:(CGRect)innerRect inRect:(CGRect)outerRect
-{
-    CGFloat nudgeRight = fmaxf(0, CGRectGetMinX(outerRect) - (CGRectGetMinX(innerRect)));
-    CGFloat nudgeLeft = fminf(0, CGRectGetMaxX(outerRect) - (CGRectGetMaxX(innerRect)));
-    CGFloat nudgeTop = fmaxf(0, CGRectGetMinY(outerRect) - (CGRectGetMinY(innerRect)));
-    CGFloat nudgeBottom = fminf(0, CGRectGetMaxY(outerRect) - (CGRectGetMaxY(innerRect)));
-    return CGSizeMake(nudgeLeft ?: nudgeRight, nudgeTop ?: nudgeBottom);
+#pragma mark ----- TeamInfoContentViewDelegate
+- (void)teamInfoContentView:(TeamInfoContentView *)view didSelectPageView:(PGIndexBannerSubiew *)pageView index:(NSInteger)index{
+//    [self.mapView selectAnnotation:self.anns[index] animated:YES];
+    NSLog(@"%s %ld",__FUNCTION__,(long)index);
 }
+
+- (void)teamInfoContentView:(TeamInfoContentView *)view didScollPageView:(NSInteger)index {
+//    [self.mapView selectAnnotation:self.anns[index] animated:YES];
+
+    NSLog(@"%s %ld",__FUNCTION__,(long)index);
+}
+
 @end

@@ -7,8 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PGIndexBannerSubiew.h"
+@class TeamInfoContentView;
+@protocol TeamInfoContentViewDelegate <NSObject>
 
+- (void) teamInfoContentView:(TeamInfoContentView *) view didSelectPageView:(PGIndexBannerSubiew *) pageView index:(NSInteger) index;
+
+- (void) teamInfoContentView:(TeamInfoContentView *) view didScollPageView:(NSInteger) index;
+
+@end
 @interface TeamInfoContentView : UIView
-- (void) popupDetailViewAnimation;
+@property (nonatomic,weak) id<TeamInfoContentViewDelegate> delegate;
+@property (nonatomic, strong) NSMutableArray *dataArray;
+- (void) popupDetailViewAnimation:(NSInteger) index;
 - (void) hidDetailViewAnimation;
+- (void) scrollPageViewToIndex:(NSInteger) index animated:(BOOL) animated;
 @end

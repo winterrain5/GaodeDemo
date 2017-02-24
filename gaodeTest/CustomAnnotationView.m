@@ -63,7 +63,7 @@
 // 设置annotation
 - (void) setupAnnotation:(CustomAnnotation *) ann {
     NSString *mask = @"";
-    CGRect frame = CGRectMake(0, 0, 34., 46.);
+    CGRect frame = CGRectMake(0, 0, 40, 52);
     switch (ann.type) {
         case CustomAnnotationTypeOne: {
             mask = @"xh_dq_zb_bg.png";
@@ -135,7 +135,7 @@
 
 #pragma mark ----- 外部方法
 - (void) startAnimation {
-    [self d3_scale:1.8];
+    [self d3_scale:1.6];
 }
 - (void) stopAnimation {
     [self d3_scale:1];

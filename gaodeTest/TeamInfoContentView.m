@@ -8,49 +8,71 @@
 
 #import "TeamInfoContentView.h"
 #import "D3View.h"
+#import "NewPagedFlowView.h"
 #define KContentViewH 190
-@interface TeamInfoContentView()
+@interface TeamInfoContentView()<NewPagedFlowViewDelegate, NewPagedFlowViewDataSource>
 
 @property (nonatomic,weak) UIView *contentView;
 
+@property (nonatomic,strong) UIScrollView *bottomScrollView;
 
-@property (nonatomic, strong) NSMutableArray *dataArray;
+@property (nonatomic, weak) NewPagedFlowView *pageFlowView;
+
+
 
 @end
 @implementation TeamInfoContentView
-- (NSMutableArray *)dataArray {
-    if (_dataArray == nil) {
-        _dataArray = [NSMutableArray array];
-        for (int index = 0; index < 5; index++) {
-            NSString *imageName = [NSString stringWithFormat:@"Yosemite%02d",index];
-            UIImage *image = [UIImage imageNamed:imageName];
-            [_dataArray addObject:image];
-        }
-        
-    }
-    return _dataArray;
-}
+
 - (instancetype)init {
     if (self = [super init]) {
         self.backgroundColor = [UIColor clearColor];
         
         UIView *contentView = [[UIView alloc] init];
-        contentView.backgroundColor = [UIColor blueColor];
+        contentView.backgroundColor = [UIColor clearColor];
         self.contentView = contentView;
         [self addSubview:contentView];
         
+        [self setupInfoView];
         
     }
     return self;
+}
+
+- (void)setupInfoView {
+
+    NewPagedFlowView *pageFlowView = [[NewPagedFlowView alloc] init];
+    self.pageFlowView = pageFlowView;
+    pageFlowView.frame = CGRectMake(0, 0, MainScreenW, (MainScreenW - 84) * 9 / 16 + 24);
+    pageFlowView.backgroundColor = [UIColor clearColor];
+    pageFlowView.delegate = self;
+    pageFlowView.dataSource = self;
+    pageFlowView.minimumPageAlpha = 0.1;
+    pageFlowView.minimumPageScale = 0.95;
+    pageFlowView.isCarousel = NO;
+    pageFlowView.orientation = NewPagedFlowViewOrientationHorizontal;
+    pageFlowView.isOpenAutoScroll = YES;
+    
+
+    self.bottomScrollView = [[UIScrollView alloc] initWithFrame:self.contentView.bounds];
+    self.bottomScrollView.backgroundColor = [UIColor clearColor];
+    [self.bottomScrollView addSubview:pageFlowView];
+    
+    [self.contentView addSubview:self.bottomScrollView];
+    
 }
 
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.contentView.frame = CGRectMake(0, -KContentViewH, MainScreenW, KContentViewH);
+    self.bottomScrollView.frame = self.contentView.bounds;
 }
 
 
+- (void)setDataArray:(NSMutableArray *)dataArray {
+    _dataArray = dataArray;
+    [self.pageFlowView reloadData];
+}
 #pragma mark ----- 动画
 - (void) popAnimationWithView:(UIView *) view offset:(CGFloat) offset{
     POPSpringAnimation * popSpring = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPositionY];
@@ -63,7 +85,7 @@
 
 
 #pragma mark ----- 外部方法
-- (void) popupDetailViewAnimation {
+- (void) popupDetailViewAnimation:(NSInteger)index {
     self.hidden = NO;
     if (-KContentViewH == self.contentView.layer.frame.origin.y) {
         [self popAnimationWithView:self.contentView offset:KContentViewH];
@@ -79,4 +101,54 @@
         self.hidden = YES;
     }];
 }
+
+- (void)scrollPageViewToIndex:(NSInteger)index animated:(BOOL)animated{
+    [self.pageFlowView scrollToPage:index animated:animated];
+}
+#pragma mark NewPagedFlowView Delegate
+- (CGSize)sizeForPageInFlowView:(NewPagedFlowView *)flowView {
+    return CGSizeMake(MainScreenW - 30, (MainScreenW - 48) * 9 / 16);
+}
+
+- (void)didSelectCell:(UIView *)subView withSubViewIndex:(NSInteger)subIndex {
+    if ([self.delegate respondsToSelector:@selector(teamInfoContentView:didSelectPageView:index:)]) {
+        if ([subView isKindOfClass:[PGIndexBannerSubiew class]]) {
+            PGIndexBannerSubiew *banerView = (PGIndexBannerSubiew *) subView;
+             [self.delegate teamInfoContentView:self didSelectPageView:banerView index:subIndex];
+        }
+       
+    }
+    NSLog(@"点击了第%ld张图",(long)subIndex + 1);
+}
+
+#pragma mark NewPagedFlowView Datasource
+- (NSInteger)numberOfPagesInFlowView:(NewPagedFlowView *)flowView {
+    
+    return self.dataArray.count;
+    
+}
+
+- (UIView *)flowView:(NewPagedFlowView *)flowView cellForPageAtIndex:(NSInteger)index{
+    PGIndexBannerSubiew *bannerView = (PGIndexBannerSubiew *)[flowView dequeueReusableCell];
+    if (!bannerView) {
+        bannerView = [[PGIndexBannerSubiew alloc] initWithFrame:CGRectMake(0, 0, MainScreenW - 30, (MainScreenW - 48) * 9 / 16)];
+        bannerView.tag = index;
+        bannerView.layer.cornerRadius = 4;
+        bannerView.layer.masksToBounds = YES;
+    }
+    //在这里下载网络图片
+    //  [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:hostUrlsImg,imageDict[@"img"]]] placeholderImage:[UIImage imageNamed:@""]];
+    bannerView.mainImageView.image = self.dataArray[index];
+    
+    return bannerView;
+}
+
+- (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(NewPagedFlowView *)flowView {
+    
+    if ([self.delegate respondsToSelector:@selector(teamInfoContentView:didScollPageView:)]) {
+        [self.delegate teamInfoContentView:self didScollPageView:pageNumber];
+    }
+   
+}
+
 @end
