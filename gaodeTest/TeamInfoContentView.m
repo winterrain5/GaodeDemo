@@ -85,7 +85,7 @@
 
 
 #pragma mark ----- 外部方法
-- (void) popupDetailViewAnimation:(NSInteger)index {
+- (void) popupDetailViewAnimation {
     self.hidden = NO;
     if (-KContentViewH == self.contentView.layer.frame.origin.y) {
         [self popAnimationWithView:self.contentView offset:KContentViewH];
@@ -103,7 +103,9 @@
 }
 
 - (void)scrollPageViewToIndex:(NSInteger)index animated:(BOOL)animated{
-    [self.pageFlowView scrollToPage:index animated:animated];
+    
+    [self.pageFlowView scrollToPage:2 animated:animated];
+    
 }
 #pragma mark NewPagedFlowView Delegate
 - (CGSize)sizeForPageInFlowView:(NewPagedFlowView *)flowView {
@@ -118,7 +120,6 @@
         }
        
     }
-    NSLog(@"点击了第%ld张图",(long)subIndex + 1);
 }
 
 #pragma mark NewPagedFlowView Datasource
@@ -136,8 +137,6 @@
         bannerView.layer.cornerRadius = 4;
         bannerView.layer.masksToBounds = YES;
     }
-    //在这里下载网络图片
-    //  [bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:hostUrlsImg,imageDict[@"img"]]] placeholderImage:[UIImage imageNamed:@""]];
     bannerView.mainImageView.image = self.dataArray[index];
     
     return bannerView;

@@ -315,11 +315,11 @@
             // 标注动画
             [annotationView startAnimation];
             // 详情动画
-            [self.teamInfoView popupDetailViewAnimation:index];
+            [self.teamInfoView popupDetailViewAnimation];
             // 重新设置中心点
             [self.mapView setCenterCoordinate:ann.coordinate animated:YES];
             
-//            [self.teamInfoView scrollPageViewToIndex:index-1 animated:NO];
+            [self.teamInfoView scrollPageViewToIndex:index-1 animated:NO];
             NSLog(@"%@ %@ %ld",self.anns,self.mapView.selectedAnnotations,(long)index);
         }
         

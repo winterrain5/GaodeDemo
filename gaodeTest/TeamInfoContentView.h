@@ -19,7 +19,7 @@
 @interface TeamInfoContentView : UIView
 @property (nonatomic,weak) id<TeamInfoContentViewDelegate> delegate;
 @property (nonatomic, strong) NSMutableArray *dataArray;
-- (void) popupDetailViewAnimation:(NSInteger) index;
+- (void) popupDetailViewAnimation;
 - (void) hidDetailViewAnimation;
 - (void) scrollPageViewToIndex:(NSInteger) index animated:(BOOL) animated;
 @end
