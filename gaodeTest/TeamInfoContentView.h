@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PGIndexBannerSubiew.h"
+#import "TeamInfoCollectionViewCell.h"
 @class TeamInfoContentView;
 @protocol TeamInfoContentViewDelegate <NSObject>
 
-- (void) teamInfoContentView:(TeamInfoContentView *) view didSelectPageView:(PGIndexBannerSubiew *) pageView index:(NSInteger) index;
+- (void) teamInfoContentView:(TeamInfoContentView *) view didSelectPageView:(UICollectionView *) collectionView index:(NSInteger) index;
 
-- (void) teamInfoContentView:(TeamInfoContentView *) view didScollPageView:(NSInteger) index;
+- (void) teamInfoContentView:(TeamInfoContentView *) view didScollPageView:(NSInteger) index byUser:(BOOL) wasByUser;
 
 @end
 @interface TeamInfoContentView : UIView

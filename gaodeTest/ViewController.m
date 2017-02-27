@@ -64,7 +64,6 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//    [self.mapView showAnnotations:self.anns animated:YES];
 }
 
 
@@ -111,7 +110,7 @@
     
     CustomAnnotation *one = [[CustomAnnotation alloc] init];
     one.type = CustomAnnotationTypeOne;
-    one.imagePath = @"me.jpg";
+    one.imagePath = @"gou.jpg";
     one.coordinate = CLLocationCoordinate2DMake(31.347556, 121.373799);
     
     CustomAnnotation *two = [[CustomAnnotation alloc] init];
@@ -121,7 +120,7 @@
     
     CustomAnnotation *three = [[CustomAnnotation alloc] init];
     three.type = CustomAnnotationTypeThree;
-    three.imagePath = @"smile.jpg";
+    three.imagePath = @"gou.jpg";
     three.coordinate = CLLocationCoordinate2DMake(31.340159, 121.371575);
     
     CustomAnnotation *four = [[CustomAnnotation alloc] init];
@@ -131,21 +130,71 @@
     
     CustomAnnotation *five = [[CustomAnnotation alloc] init];
     five.type = CustomAnnotationTypeOne;
-    five.imagePath = @"smile.jpg";
+    five.imagePath = @"gou.jpg";
     five.coordinate = CLLocationCoordinate2DMake(31.342346, 121.376681);
     
+    CustomAnnotation *six = [[CustomAnnotation alloc] init];
+    six.type = CustomAnnotationTypeTwo;
+    six.imagePath = @"gou.jpg";
+    six.coordinate = CLLocationCoordinate2DMake(31.342259, 121.370140);
     
-    self.anns = @[one,two,three,four,five];
-    [self.mapView addAnnotations:@[one,two,three,four,five]];
+    CustomAnnotation *seven = [[CustomAnnotation alloc] init];
+    seven.type = CustomAnnotationTypeThree;
+    seven.imagePath = @"gou.jpg";
+    seven.coordinate = CLLocationCoordinate2DMake(31.340832, 121.367456);
+    
+    CustomAnnotation *eight = [[CustomAnnotation alloc] init];
+    eight.type = CustomAnnotationTypeFour;
+    eight.imagePath = @"gou.jpg";
+    eight.coordinate = CLLocationCoordinate2DMake(31.344910, 121.365357);
+    
+    CustomAnnotation *nine = [[CustomAnnotation alloc] init];
+    nine.type = CustomAnnotationTypeOne;
+    nine.imagePath = @"gou.jpg";
+    nine.coordinate = CLLocationCoordinate2DMake(31.348416, 121.365908);
+    
+    CustomAnnotation *ten = [[CustomAnnotation alloc] init];
+    ten.type = CustomAnnotationTypeOne;
+    ten.imagePath = @"gou.jpg";
+    ten.coordinate = CLLocationCoordinate2DMake(31.347513, 121.371678);
+    
+    CustomAnnotation *eleven = [[CustomAnnotation alloc] init];
+    eleven.type = CustomAnnotationTypeOne;
+    eleven.imagePath = @"gou.jpg";
+    eleven.coordinate = CLLocationCoordinate2DMake(31.344897, 121.377084);
+    
+    CustomAnnotation *tewlve = [[CustomAnnotation alloc] init];
+    tewlve.type = CustomAnnotationTypeOne;
+    tewlve.imagePath = @"gou.jpg";
+    tewlve.coordinate = CLLocationCoordinate2DMake(31.341874, 121.375796);
+    
+    CustomAnnotation *thirdteen = [[CustomAnnotation alloc] init];
+    thirdteen.type = CustomAnnotationTypeOne;
+    thirdteen.imagePath = @"gou.jpg";
+    thirdteen.coordinate = CLLocationCoordinate2DMake(31.337638, 121.373001);
+    
+    CustomAnnotation *fourteen = [[CustomAnnotation alloc] init];
+    fourteen.type = CustomAnnotationTypeOne;
+    fourteen.imagePath = @"gou.jpg";
+    fourteen.coordinate = CLLocationCoordinate2DMake(31.345576, 121.379075);
+    
+    CustomAnnotation *fifteen = [[CustomAnnotation alloc] init];
+    fifteen.type = CustomAnnotationTypeOne;
+    fifteen.imagePath = @"gou.jpg";
+    fifteen.coordinate = CLLocationCoordinate2DMake(31.341321, 121.378819);
+    
+    
+    NSArray *annsArray = @[one,two,three,four,five,six,seven,eight,nine,ten,eleven,tewlve,thirdteen,fourteen,fifteen];
+    self.anns = annsArray;
+    [self.mapView addAnnotations:annsArray];
     
     NSMutableArray *dataarray = [NSMutableArray array];
-    for (int index = 0; index < self.mapView.annotations.count-1; index++) {
-        NSString *imageName = [NSString stringWithFormat:@"Yosemite%02d",index];
-        UIImage *image = [UIImage imageNamed:imageName];
-        [dataarray addObject:image];
+    for (int index = 0; index < annsArray.count; index++) {
+        NSString *imageName = [NSString stringWithFormat:@"Yosemite%d",index];
+        [dataarray addObject:imageName];
     }
     self.teamInfoView.dataArray = dataarray;
-    return @[one,two,three,four,five];
+    return annsArray;
     
 }
 
@@ -270,7 +319,6 @@
         
         //很重要的，配置关联的模型数据
         cusAnnotationView.annotation = cusAnnotation;
-        
         return cusAnnotationView;
     } else if ([annotation isKindOfClass:[MAPointAnnotation class]]) {
         static NSString *userLocationID = @"lockLocation";
@@ -306,9 +354,6 @@
         
         if ([annotationView.annotation isKindOfClass:[CustomAnnotation class]]) {
             
-            // pageView滚动到指定页
-            NSInteger index = (NSInteger)[self.anns indexOfObject:self.mapView.selectedAnnotations[0]];
-            
             CustomAnnotation *ann = (CustomAnnotation *) annotationView.annotation;
             
             self.selectedCustomAnnView = annotationView;
@@ -318,9 +363,10 @@
             [self.teamInfoView popupDetailViewAnimation];
             // 重新设置中心点
             [self.mapView setCenterCoordinate:ann.coordinate animated:YES];
+            // teamInfoView 滑动到指定页面
+            NSInteger index = (NSInteger)[self.anns indexOfObject:self.mapView.selectedAnnotations[0]];
+            [self.teamInfoView scrollPageViewToIndex:index animated:NO];
             
-            [self.teamInfoView scrollPageViewToIndex:index-1 animated:NO];
-            NSLog(@"%@ %@ %ld",self.anns,self.mapView.selectedAnnotations,(long)index);
         }
         
     }
@@ -381,15 +427,13 @@
 }
 
 #pragma mark ----- TeamInfoContentViewDelegate
-- (void)teamInfoContentView:(TeamInfoContentView *)view didSelectPageView:(PGIndexBannerSubiew *)pageView index:(NSInteger)index{
-//    [self.mapView selectAnnotation:self.anns[index] animated:YES];
-    NSLog(@"%s %ld",__FUNCTION__,(long)index);
+- (void)teamInfoContentView:(TeamInfoContentView *)view didSelectPageView:(UICollectionView *)collectionView index:(NSInteger)index {
+    
 }
 
-- (void)teamInfoContentView:(TeamInfoContentView *)view didScollPageView:(NSInteger)index {
-//    [self.mapView selectAnnotation:self.anns[index] animated:YES];
-
-    NSLog(@"%s %ld",__FUNCTION__,(long)index);
+- (void)teamInfoContentView:(TeamInfoContentView *)view didScollPageView:(NSInteger)index byUser:(BOOL)wasByUser {
+    [self.mapView selectAnnotation:self.anns[index] animated:NO];
+//    NSLog(@"%s %ld %d",__FUNCTION__,(long)index,wasByUser);
 }
 
 @end

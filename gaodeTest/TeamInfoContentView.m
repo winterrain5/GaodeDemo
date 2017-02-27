@@ -9,14 +9,16 @@
 #import "TeamInfoContentView.h"
 #import "D3View.h"
 #import "NewPagedFlowView.h"
+#import "TeamInfoFlowLayout.h"
 #define KContentViewH 190
-@interface TeamInfoContentView()<NewPagedFlowViewDelegate, NewPagedFlowViewDataSource>
+#define CellID @"teamInfoCell"
+@interface TeamInfoContentView()<UICollectionViewDelegate,UICollectionViewDataSource>
 
 @property (nonatomic,weak) UIView *contentView;
 
 @property (nonatomic,strong) UIScrollView *bottomScrollView;
 
-@property (nonatomic, weak) NewPagedFlowView *pageFlowView;
+@property (nonatomic, weak) UICollectionView *collectionView;
 
 
 
@@ -39,39 +41,33 @@
 }
 
 - (void)setupInfoView {
-
-    NewPagedFlowView *pageFlowView = [[NewPagedFlowView alloc] init];
-    self.pageFlowView = pageFlowView;
-    pageFlowView.frame = CGRectMake(0, 0, MainScreenW, (MainScreenW - 84) * 9 / 16 + 24);
-    pageFlowView.backgroundColor = [UIColor clearColor];
-    pageFlowView.delegate = self;
-    pageFlowView.dataSource = self;
-    pageFlowView.minimumPageAlpha = 0.1;
-    pageFlowView.minimumPageScale = 0.95;
-    pageFlowView.isCarousel = NO;
-    pageFlowView.orientation = NewPagedFlowViewOrientationHorizontal;
-    pageFlowView.isOpenAutoScroll = YES;
     
+    self.contentView.frame = CGRectMake(0, -KContentViewH, MainScreenW, KContentViewH);
+    TeamInfoFlowLayout *flowLayout = [[TeamInfoFlowLayout alloc] init];
+    UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:self.contentView.bounds collectionViewLayout:flowLayout];
+    self.collectionView = collectionView;
+    [self.contentView addSubview:collectionView];
+    collectionView.backgroundColor = [UIColor clearColor];
+    collectionView.showsHorizontalScrollIndicator = NO;
+    collectionView.delegate = self;
+    collectionView.dataSource = self;
+    collectionView.pagingEnabled = YES;
+    [collectionView registerClass:[TeamInfoCollectionViewCell class] forCellWithReuseIdentifier:CellID];
 
-    self.bottomScrollView = [[UIScrollView alloc] initWithFrame:self.contentView.bounds];
-    self.bottomScrollView.backgroundColor = [UIColor clearColor];
-    [self.bottomScrollView addSubview:pageFlowView];
-    
-    [self.contentView addSubview:self.bottomScrollView];
     
 }
 
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.contentView.frame = CGRectMake(0, -KContentViewH, MainScreenW, KContentViewH);
-    self.bottomScrollView.frame = self.contentView.bounds;
+    
+    
 }
 
 
 - (void)setDataArray:(NSMutableArray *)dataArray {
     _dataArray = dataArray;
-    [self.pageFlowView reloadData];
+    [self.collectionView reloadData];
 }
 #pragma mark ----- 动画
 - (void) popAnimationWithView:(UIView *) view offset:(CGFloat) offset{
@@ -102,52 +98,43 @@
     }];
 }
 
+// 滑动到指定页面
 - (void)scrollPageViewToIndex:(NSInteger)index animated:(BOOL)animated{
     
-    [self.pageFlowView scrollToPage:2 animated:animated];
+    NSIndexPath *indexpath = [NSIndexPath indexPathForItem:index inSection:0];
+    [self.collectionView scrollToItemAtIndexPath:indexpath atScrollPosition:UICollectionViewScrollPositionNone animated:animated];
     
 }
-#pragma mark NewPagedFlowView Delegate
-- (CGSize)sizeForPageInFlowView:(NewPagedFlowView *)flowView {
-    return CGSizeMake(MainScreenW - 30, (MainScreenW - 48) * 9 / 16);
-}
 
-- (void)didSelectCell:(UIView *)subView withSubViewIndex:(NSInteger)subIndex {
-    if ([self.delegate respondsToSelector:@selector(teamInfoContentView:didSelectPageView:index:)]) {
-        if ([subView isKindOfClass:[PGIndexBannerSubiew class]]) {
-            PGIndexBannerSubiew *banerView = (PGIndexBannerSubiew *) subView;
-             [self.delegate teamInfoContentView:self didSelectPageView:banerView index:subIndex];
-        }
-       
-    }
-}
 
-#pragma mark NewPagedFlowView Datasource
-- (NSInteger)numberOfPagesInFlowView:(NewPagedFlowView *)flowView {
-    
+#pragma mark ----- UICollectionViewDataSource
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.dataArray.count;
-    
 }
-
-- (UIView *)flowView:(NewPagedFlowView *)flowView cellForPageAtIndex:(NSInteger)index{
-    PGIndexBannerSubiew *bannerView = (PGIndexBannerSubiew *)[flowView dequeueReusableCell];
-    if (!bannerView) {
-        bannerView = [[PGIndexBannerSubiew alloc] initWithFrame:CGRectMake(0, 0, MainScreenW - 30, (MainScreenW - 48) * 9 / 16)];
-        bannerView.tag = index;
-        bannerView.layer.cornerRadius = 4;
-        bannerView.layer.masksToBounds = YES;
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    TeamInfoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellID forIndexPath:indexPath];
+    if (cell == nil) {
+        cell = [[TeamInfoCollectionViewCell alloc] init];
     }
-    bannerView.mainImageView.image = self.dataArray[index];
-    
-    return bannerView;
+    cell.imageName = self.dataArray[indexPath.row];
+    return cell;
 }
 
-- (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(NewPagedFlowView *)flowView {
-    
-    if ([self.delegate respondsToSelector:@selector(teamInfoContentView:didScollPageView:)]) {
-        [self.delegate teamInfoContentView:self didScollPageView:pageNumber];
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if ([self.delegate respondsToSelector:@selector(teamInfoContentView:didSelectPageView:index:)]) {
+        [self.delegate teamInfoContentView:self didSelectPageView:collectionView index:indexPath.row];
     }
-   
 }
 
+
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    NSArray *indexPathArray = [self.collectionView indexPathsForVisibleItems];
+    NSIndexPath *indexPath = indexPathArray[0];
+    NSLog(@"scrollViewDidEndDragging == %ld",indexPath.row);
+    if ([self.delegate respondsToSelector:@selector(teamInfoContentView:didScollPageView:byUser:)]) {
+        [self.delegate teamInfoContentView:self didScollPageView:indexPath.row byUser:YES];
+    }
+}
 @end

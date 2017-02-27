@@ -72,7 +72,7 @@
         break;
         
         case CustomAnnotationTypeTwo: {
-            mask = @"xh_zb_red_ic.png";
+            mask = @"xh_dq_zb_bg.png";
         }
         
         break;
@@ -135,9 +135,12 @@
 
 #pragma mark ----- 外部方法
 - (void) startAnimation {
+    self.backgroundImageView.image = [UIImage imageNamed:@"xh_zb_red_ic.png"];
     [self d3_scale:1.6];
 }
 - (void) stopAnimation {
+    
+    self.backgroundImageView.image = [UIImage imageNamed:@"xh_dq_zb_bg.png"];
     [self d3_scale:1];
 }
 

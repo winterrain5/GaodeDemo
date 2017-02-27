@@ -16,22 +16,22 @@
 
 @implementation TeamInfoCollectionViewCell
 
-- (instancetype)init {
-    if (self = [super init]) {
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
         
-        self.layer.cornerRadius = 5;
-        self.layer.masksToBounds = YES;
-        
+        CGRect mainScreen = [UIScreen mainScreen].bounds;
         UIImageView *imageView = [[UIImageView alloc] init];
         self.imageView = imageView;
-        imageView.frame = self.bounds;
+        imageView.backgroundColor = [UIColor redColor];
+        imageView.frame = CGRectMake(0, 0, mainScreen.size.width, 180);
         [self.contentView addSubview:imageView];
-        
     }
     return self;
 }
 - (void)setImageName:(NSString *)imageName{
     _imageName = imageName;
+    self.imageView.image = [UIImage imageNamed:imageName];
 }
 
 @end
