@@ -21,13 +21,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IwB-cV-a4g">
-                                <rect key="frame" x="135" y="318" width="104" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IwB-cV-a4g">
+                                <rect key="frame" x="135" y="313" width="104" height="40"/>
                                 <color key="backgroundColor" red="0.29411764709999999" green="0.6705882353" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" constant="104" id="1um-8W-Aod"/>
                                     <constraint firstAttribute="height" constant="40" id="t37-qs-scK"/>
                                 </constraints>
-                                <state key="normal" title="点我跳转">
+                                <state key="normal" title="点我跳转下单">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -35,9 +36,26 @@
                                     <action selector="jumpBtnCLick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4Vh-ka-mE3"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oj1-zT-7wP">
+                                <rect key="frame" x="135" y="373" width="104" height="40"/>
+                                <color key="backgroundColor" red="0.29411764709999999" green="0.6705882353" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="EYr-R2-Nnm"/>
+                                    <constraint firstAttribute="width" constant="104" id="SJw-ku-RUt"/>
+                                </constraints>
+                                <state key="normal" title="点我跳转抢单">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="jumpbtn2Click:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9fM-tZ-qsq"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="oj1-zT-7wP" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8dI-vx-pKL"/>
+                            <constraint firstItem="oj1-zT-7wP" firstAttribute="top" secondItem="IwB-cV-a4g" secondAttribute="bottom" constant="20" id="C12-O0-edZ"/>
                             <constraint firstItem="IwB-cV-a4g" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="NMd-ie-qcB"/>
                             <constraint firstItem="IwB-cV-a4g" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="oMI-os-RbL"/>
                         </constraints>

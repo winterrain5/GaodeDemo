@@ -24,7 +24,7 @@
         UIImageView *imageView = [[UIImageView alloc] init];
         self.imageView = imageView;
         imageView.backgroundColor = [UIColor redColor];
-        imageView.frame = CGRectMake(0, 0, mainScreen.size.width, 180);
+        imageView.frame = CGRectMake(0, 0, mainScreen.size.width, 190);
         [self.contentView addSubview:imageView];
     }
     return self;

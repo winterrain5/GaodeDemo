@@ -9,6 +9,7 @@
 #import "CustomAnnotationView.h"
 #import "CustomAnnotation.h"
 #import "D3View.h"
+#import "CustomCalloutView.h"
 @interface CustomAnnotationView()
 
 @property (nonatomic, strong) UIImageView *backgroundImageView;
@@ -133,6 +134,17 @@
     }
 }
 
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    UIView *view = [super hitTest:point withEvent:event];
+    if (view == nil) {
+        CGPoint tempoint = [self.calloutView.btn convertPoint:point fromView:self];
+        if (CGRectContainsPoint(self.calloutView.btn.bounds, tempoint)) {
+            view = self.calloutView.btn;
+        }
+    }
+    return view;
+
+}
 #pragma mark ----- 外部方法
 - (void) startAnimation {
     self.backgroundImageView.image = [UIImage imageNamed:@"xh_zb_red_ic.png"];

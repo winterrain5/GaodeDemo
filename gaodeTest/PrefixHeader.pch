@@ -16,6 +16,6 @@
 #import <AMapSearchKit/AMapSearchKit.h>
 #import "AppMacro.h"
 #import <pop/POP.h>
-
+#import "D3View.h"
 
 #endif /* PrefixHeader_pch */

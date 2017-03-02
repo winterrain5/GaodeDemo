@@ -7,12 +7,14 @@ PODS:
   - AMapSearch (4.4.1):
     - AMapFoundation (~> 1.2)
   - pop (1.0.9)
+  - PureLayout (3.0.2)
 
 DEPENDENCIES:
   - AMap3DMap
   - AMapLocation
   - AMapSearch
   - pop
+  - PureLayout
 
 SPEC CHECKSUMS:
   AMap3DMap: 0b1263f9e58d6f96df145c9d5012987aa13f67d9
@@ -20,7 +22,8 @@ SPEC CHECKSUMS:
   AMapLocation: 5fb51fe0e35e68a899199651942e6234d6257d91
   AMapSearch: 16a50b493ad419e8b6b81bafdeca7570db52f28e
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
+  PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
 
-PODFILE CHECKSUM: e153577c2c7ba415aa4272a1ea1875f059ad9f62
+PODFILE CHECKSUM: 613ff7607d12db9430ca726bdc19b62ef09fa641
 
 COCOAPODS: 1.2.0.beta.1

@@ -7,6 +7,7 @@
 //
 
 #import "FirstViewController.h"
+#import "SecondViewController.h"
 #import "ViewController.h"
 @interface FirstViewController ()<CLLocationManagerDelegate>
 @property (nonatomic, strong) CLLocationManager *locationManager;
@@ -31,29 +32,16 @@
 }
 
 #pragma mark ----- CLLocationManagerDelegate
-// 设置开启定位功能
-- (void) setupLocationFunction {
-    
-    [self.locationManager requestAlwaysAuthorization];//这句话ios8以上版本使用。
-    // 更新地理位置 触发代理事件 获取位置信息
-    [self.locationManager startUpdatingLocation];
-}
 
-// 地理位置发生改变时触发
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
-{
-    
-    CLLocationDegrees latitude= newLocation.coordinate.latitude;
-    CLLocationDegrees longitide = newLocation.coordinate.longitude;
-    NSLog(@"changeLocation");
-    // 停止位置更新
-    [manager stopUpdatingLocation];
-    
-    
-}
+
 - (IBAction)jumpBtnCLick:(id)sender {
     
     [self.navigationController pushViewController:[ViewController new] animated:YES];
+}
+- (IBAction)jumpbtn2Click:(UIButton *)sender {
+    
+    
+    [self.navigationController pushViewController:[SecondViewController new] animated:YES];
 }
 
 @end

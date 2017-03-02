@@ -7,8 +7,9 @@
 //
 
 #import <MAMapKit/MAMapKit.h>
-
+@class CustomCalloutView;
 @interface CustomAnnotationView : MAAnnotationView
+@property (nonatomic, strong) CustomCalloutView *calloutView;
 - (void) startAnimation;
 - (void) stopAnimation;
 @end

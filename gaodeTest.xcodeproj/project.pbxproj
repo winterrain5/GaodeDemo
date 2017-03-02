@@ -9,9 +9,7 @@
 /* Begin PBXBuildFile section */
 		2529761E1E5D391E00B74C74 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2529761D1E5D391E00B74C74 /* main.m */; };
 		252976211E5D391E00B74C74 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 252976201E5D391E00B74C74 /* AppDelegate.m */; };
-		252976241E5D391E00B74C74 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 252976231E5D391E00B74C74 /* ViewController.m */; };
 		252976271E5D391E00B74C74 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 252976251E5D391E00B74C74 /* Main.storyboard */; };
-		252976291E5D391E00B74C74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 252976281E5D391E00B74C74 /* Assets.xcassets */; };
 		2529762C1E5D391E00B74C74 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2529762A1E5D391E00B74C74 /* LaunchScreen.storyboard */; };
 		252976381E5D41D400B74C74 /* AMap.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 252976371E5D41D400B74C74 /* AMap.bundle */; };
 		252977C91E5D41FC00B74C74 /* heatMapData.json in Resources */ = {isa = PBXBuildFile; fileRef = 2529763B1E5D41FA00B74C74 /* heatMapData.json */; };
@@ -415,8 +413,20 @@
 		2540E2301E5E888400EFC9E9 /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2540E22F1E5E888400EFC9E9 /* Reveal.framework */; };
 		2540E2321E5E889D00EFC9E9 /* libz.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2540E2311E5E889D00EFC9E9 /* libz.1.tbd */; };
 		2540E2531E5ECF0700EFC9E9 /* TeamInfoContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2540E2521E5ECF0700EFC9E9 /* TeamInfoContentView.m */; };
+		2553B4D31E669B1500354031 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2553B4D21E669B1500354031 /* SecondViewController.m */; };
+		2553B4D71E66A06D00354031 /* CustomCalloutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2553B4D61E66A06D00354031 /* CustomCalloutView.m */; };
+		2553B4DA1E66C2D200354031 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2553B4D91E66C2D200354031 /* DetailViewController.m */; };
+		2553B4DD1E66C84200354031 /* RouteMapHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2553B4DC1E66C84200354031 /* RouteMapHeaderView.m */; };
+		2553B4E01E66CB7D00354031 /* UIScrollView+VGParallaxHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2553B4DF1E66CB7D00354031 /* UIScrollView+VGParallaxHeader.m */; };
 		25C53E051E63B1F300B461B5 /* TeamInfoFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C53E041E63B1F300B461B5 /* TeamInfoFlowLayout.m */; };
 		25C53E091E63B20C00B461B5 /* TeamInfoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C53E071E63B20C00B461B5 /* TeamInfoCollectionViewCell.m */; };
+		25C53E0E1E64035C00B461B5 /* POIAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C53E0D1E64035C00B461B5 /* POIAnnotation.m */; };
+		25C53E111E64052300B461B5 /* TipAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C53E101E64052300B461B5 /* TipAnnotation.m */; };
+		25C53E1E1E64194800B461B5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25C53E1D1E64194800B461B5 /* Assets.xcassets */; };
+		25C53E1F1E6419D700B461B5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 252976231E5D391E00B74C74 /* ViewController.m */; };
+		25C53E291E6428B000B461B5 /* RWDropdownMenuTransitionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C53E241E6428B000B461B5 /* RWDropdownMenuTransitionController.m */; };
+		25C53E2B1E6428B000B461B5 /* RWDropdownMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C53E281E6428B000B461B5 /* RWDropdownMenuCell.m */; };
+		25C53E2E1E642DCE00B461B5 /* RWDropdownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C53E2D1E642DCE00B461B5 /* RWDropdownMenu.m */; };
 		F6B25E6A7E2F8F5CE1F4A8CD /* libPods-gaodeTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D5B1F24A6D6ACDB156896737 /* libPods-gaodeTest.a */; };
 /* End PBXBuildFile section */
 
@@ -429,7 +439,6 @@
 		252976221E5D391E00B74C74 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		252976231E5D391E00B74C74 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		252976261E5D391E00B74C74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		252976281E5D391E00B74C74 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2529762B1E5D391E00B74C74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2529762D1E5D391E00B74C74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		252976361E5D3F9500B74C74 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -841,10 +850,31 @@
 		2540E2311E5E889D00EFC9E9 /* libz.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.tbd; path = usr/lib/libz.1.tbd; sourceTree = SDKROOT; };
 		2540E2511E5ECF0700EFC9E9 /* TeamInfoContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamInfoContentView.h; sourceTree = "<group>"; };
 		2540E2521E5ECF0700EFC9E9 /* TeamInfoContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamInfoContentView.m; sourceTree = "<group>"; };
+		2553B4D11E669B1500354031 /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
+		2553B4D21E669B1500354031 /* SecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		2553B4D51E66A06D00354031 /* CustomCalloutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCalloutView.h; sourceTree = "<group>"; };
+		2553B4D61E66A06D00354031 /* CustomCalloutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCalloutView.m; sourceTree = "<group>"; };
+		2553B4D81E66C2D200354031 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		2553B4D91E66C2D200354031 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		2553B4DB1E66C84200354031 /* RouteMapHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteMapHeaderView.h; sourceTree = "<group>"; };
+		2553B4DC1E66C84200354031 /* RouteMapHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteMapHeaderView.m; sourceTree = "<group>"; };
+		2553B4DE1E66CB7D00354031 /* UIScrollView+VGParallaxHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+VGParallaxHeader.h"; sourceTree = "<group>"; };
+		2553B4DF1E66CB7D00354031 /* UIScrollView+VGParallaxHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+VGParallaxHeader.m"; sourceTree = "<group>"; };
 		25C53E031E63B1F300B461B5 /* TeamInfoFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamInfoFlowLayout.h; sourceTree = "<group>"; };
 		25C53E041E63B1F300B461B5 /* TeamInfoFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamInfoFlowLayout.m; sourceTree = "<group>"; };
 		25C53E061E63B20C00B461B5 /* TeamInfoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamInfoCollectionViewCell.h; sourceTree = "<group>"; };
 		25C53E071E63B20C00B461B5 /* TeamInfoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamInfoCollectionViewCell.m; sourceTree = "<group>"; };
+		25C53E0C1E64035C00B461B5 /* POIAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIAnnotation.h; sourceTree = "<group>"; };
+		25C53E0D1E64035C00B461B5 /* POIAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIAnnotation.m; sourceTree = "<group>"; };
+		25C53E0F1E64052300B461B5 /* TipAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TipAnnotation.h; sourceTree = "<group>"; };
+		25C53E101E64052300B461B5 /* TipAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TipAnnotation.m; sourceTree = "<group>"; };
+		25C53E1D1E64194800B461B5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		25C53E231E6428B000B461B5 /* RWDropdownMenuTransitionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RWDropdownMenuTransitionController.h; sourceTree = "<group>"; };
+		25C53E241E6428B000B461B5 /* RWDropdownMenuTransitionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RWDropdownMenuTransitionController.m; sourceTree = "<group>"; };
+		25C53E271E6428B000B461B5 /* RWDropdownMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RWDropdownMenuCell.h; sourceTree = "<group>"; };
+		25C53E281E6428B000B461B5 /* RWDropdownMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RWDropdownMenuCell.m; sourceTree = "<group>"; };
+		25C53E2C1E642DCE00B461B5 /* RWDropdownMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RWDropdownMenu.h; sourceTree = "<group>"; };
+		25C53E2D1E642DCE00B461B5 /* RWDropdownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RWDropdownMenu.m; sourceTree = "<group>"; };
 		D5B1F24A6D6ACDB156896737 /* libPods-gaodeTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-gaodeTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D963EAC56C470402AB2D35D9 /* Pods-gaodeTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gaodeTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-gaodeTest/Pods-gaodeTest.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -884,18 +914,14 @@
 		2529761B1E5D391E00B74C74 /* gaodeTest */ = {
 			isa = PBXGroup;
 			children = (
+				2553B4D01E669ACB00354031 /* qiangdan */,
+				2553B4CF1E669A4D00354031 /* xiadan */,
 				2540E22F1E5E888400EFC9E9 /* Reveal.framework */,
-				2529796F1E5D70B400B74C74 /* CustomAnnotationView */,
 				252976391E5D41FA00B74C74 /* Resources */,
 				252976371E5D41D400B74C74 /* AMap.bundle */,
-				2529761F1E5D391E00B74C74 /* AppDelegate.h */,
-				252976201E5D391E00B74C74 /* AppDelegate.m */,
-				252976221E5D391E00B74C74 /* ViewController.h */,
-				252976231E5D391E00B74C74 /* ViewController.m */,
 				2529794E1E5D62A300B74C74 /* FirstViewController.h */,
 				2529794F1E5D62A300B74C74 /* FirstViewController.m */,
 				252976251E5D391E00B74C74 /* Main.storyboard */,
-				252976281E5D391E00B74C74 /* Assets.xcassets */,
 				2529762A1E5D391E00B74C74 /* LaunchScreen.storyboard */,
 				2529762D1E5D391E00B74C74 /* Info.plist */,
 				2529761C1E5D391E00B74C74 /* Supporting Files */,
@@ -906,6 +932,9 @@
 		2529761C1E5D391E00B74C74 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				2529761F1E5D391E00B74C74 /* AppDelegate.h */,
+				252976201E5D391E00B74C74 /* AppDelegate.m */,
+				25C53E1D1E64194800B461B5 /* Assets.xcassets */,
 				2529761D1E5D391E00B74C74 /* main.m */,
 				252976361E5D3F9500B74C74 /* PrefixHeader.pch */,
 				2529794D1E5D42A800B74C74 /* AppMacro.h */,
@@ -1381,6 +1410,8 @@
 		2529796F1E5D70B400B74C74 /* CustomAnnotationView */ = {
 			isa = PBXGroup;
 			children = (
+				25C53E121E64169C00B461B5 /* MenuView */,
+				25C53E0B1E64030E00B461B5 /* SearchAnnotation */,
 				2540E2341E5EB17500EFC9E9 /* TeamInfoView */,
 				2540E2331E5EB15900EFC9E9 /* CustomAnnotationView */,
 				2540E2271E5E719400EFC9E9 /* D3View.h */,
@@ -1411,6 +1442,65 @@
 				25C53E071E63B20C00B461B5 /* TeamInfoCollectionViewCell.m */,
 			);
 			name = TeamInfoView;
+			sourceTree = "<group>";
+		};
+		2553B4CF1E669A4D00354031 /* xiadan */ = {
+			isa = PBXGroup;
+			children = (
+				2529796F1E5D70B400B74C74 /* CustomAnnotationView */,
+				252976221E5D391E00B74C74 /* ViewController.h */,
+				252976231E5D391E00B74C74 /* ViewController.m */,
+			);
+			name = xiadan;
+			sourceTree = "<group>";
+		};
+		2553B4D01E669ACB00354031 /* qiangdan */ = {
+			isa = PBXGroup;
+			children = (
+				2553B4D41E66A04800354031 /* View */,
+				2553B4D11E669B1500354031 /* SecondViewController.h */,
+				2553B4D21E669B1500354031 /* SecondViewController.m */,
+				2553B4D81E66C2D200354031 /* DetailViewController.h */,
+				2553B4D91E66C2D200354031 /* DetailViewController.m */,
+			);
+			name = qiangdan;
+			sourceTree = "<group>";
+		};
+		2553B4D41E66A04800354031 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2553B4DE1E66CB7D00354031 /* UIScrollView+VGParallaxHeader.h */,
+				2553B4DF1E66CB7D00354031 /* UIScrollView+VGParallaxHeader.m */,
+				2553B4D51E66A06D00354031 /* CustomCalloutView.h */,
+				2553B4D61E66A06D00354031 /* CustomCalloutView.m */,
+				2553B4DB1E66C84200354031 /* RouteMapHeaderView.h */,
+				2553B4DC1E66C84200354031 /* RouteMapHeaderView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		25C53E0B1E64030E00B461B5 /* SearchAnnotation */ = {
+			isa = PBXGroup;
+			children = (
+				25C53E0C1E64035C00B461B5 /* POIAnnotation.h */,
+				25C53E0D1E64035C00B461B5 /* POIAnnotation.m */,
+				25C53E0F1E64052300B461B5 /* TipAnnotation.h */,
+				25C53E101E64052300B461B5 /* TipAnnotation.m */,
+			);
+			name = SearchAnnotation;
+			sourceTree = "<group>";
+		};
+		25C53E121E64169C00B461B5 /* MenuView */ = {
+			isa = PBXGroup;
+			children = (
+				25C53E231E6428B000B461B5 /* RWDropdownMenuTransitionController.h */,
+				25C53E241E6428B000B461B5 /* RWDropdownMenuTransitionController.m */,
+				25C53E271E6428B000B461B5 /* RWDropdownMenuCell.h */,
+				25C53E281E6428B000B461B5 /* RWDropdownMenuCell.m */,
+				25C53E2C1E642DCE00B461B5 /* RWDropdownMenu.h */,
+				25C53E2D1E642DCE00B461B5 /* RWDropdownMenu.m */,
+			);
+			name = MenuView;
 			sourceTree = "<group>";
 		};
 		570DD451CF60AEFE0B284815 /* Pods */ = {
@@ -1655,7 +1745,6 @@
 				252977ED1E5D41FC00B74C74 /* 11_1684_776.png in Resources */,
 				252978171E5D41FC00B74C74 /* 12_3371_1551.png in Resources */,
 				252977D11E5D41FC00B74C74 /* animatedCar_4.png in Resources */,
-				252976291E5D391E00B74C74 /* Assets.xcassets in Resources */,
 				252978701E5D41FC00B74C74 /* 13_6739_3098.png in Resources */,
 				252978321E5D41FC00B74C74 /* 12_3375_1546.png in Resources */,
 				252979641E5D709700B74C74 /* me.jpg in Resources */,
@@ -1687,6 +1776,7 @@
 				252979441E5D41FD00B74C74 /* startPoint@2x.png in Resources */,
 				252979161E5D41FC00B74C74 /* 13_6749_3104.png in Resources */,
 				2529782A1E5D41FC00B74C74 /* 12_3374_1546.png in Resources */,
+				25C53E1E1E64194800B461B5 /* Assets.xcassets in Resources */,
 				252978041E5D41FC00B74C74 /* 12_3369_1548.png in Resources */,
 				252977F01E5D41FC00B74C74 /* 11_1685_775.png in Resources */,
 				2529785A1E5D41FC00B74C74 /* 13_6738_3092.png in Resources */,
@@ -1949,16 +2039,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				252976241E5D391E00B74C74 /* ViewController.m in Sources */,
+				2553B4DD1E66C84200354031 /* RouteMapHeaderView.m in Sources */,
 				2540E2291E5E719400EFC9E9 /* D3View.m in Sources */,
+				25C53E291E6428B000B461B5 /* RWDropdownMenuTransitionController.m in Sources */,
 				2529797B1E5D72AD00B74C74 /* CustomAnnotationView.m in Sources */,
 				2540E2531E5ECF0700EFC9E9 /* TeamInfoContentView.m in Sources */,
 				252976211E5D391E00B74C74 /* AppDelegate.m in Sources */,
 				2529761E1E5D391E00B74C74 /* main.m in Sources */,
+				25C53E111E64052300B461B5 /* TipAnnotation.m in Sources */,
+				25C53E1F1E6419D700B461B5 /* ViewController.m in Sources */,
+				25C53E0E1E64035C00B461B5 /* POIAnnotation.m in Sources */,
+				2553B4DA1E66C2D200354031 /* DetailViewController.m in Sources */,
 				252979781E5D710E00B74C74 /* CustomAnnotation.m in Sources */,
 				25C53E091E63B20C00B461B5 /* TeamInfoCollectionViewCell.m in Sources */,
+				2553B4D31E669B1500354031 /* SecondViewController.m in Sources */,
+				2553B4D71E66A06D00354031 /* CustomCalloutView.m in Sources */,
+				25C53E2B1E6428B000B461B5 /* RWDropdownMenuCell.m in Sources */,
+				2553B4E01E66CB7D00354031 /* UIScrollView+VGParallaxHeader.m in Sources */,
 				25C53E051E63B1F300B461B5 /* TeamInfoFlowLayout.m in Sources */,
 				252979501E5D62A300B74C74 /* FirstViewController.m in Sources */,
+				25C53E2E1E642DCE00B461B5 /* RWDropdownMenu.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

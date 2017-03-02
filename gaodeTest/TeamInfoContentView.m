@@ -8,7 +8,6 @@
 
 #import "TeamInfoContentView.h"
 #import "D3View.h"
-#import "NewPagedFlowView.h"
 #import "TeamInfoFlowLayout.h"
 #define KContentViewH 190
 #define CellID @"teamInfoCell"

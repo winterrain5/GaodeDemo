@@ -10,7 +10,10 @@
 #import "CustomAnnotation.h"
 #import "CustomAnnotationView.h"
 #import "TeamInfoContentView.h"
-@interface ViewController ()<MAMapViewDelegate,CLLocationManagerDelegate,TeamInfoContentViewDelegate>
+#import "POIAnnotation.h"
+#import "TipAnnotation.h"
+#import "RWDropdownMenu.h"
+@interface ViewController ()<MAMapViewDelegate,CLLocationManagerDelegate,TeamInfoContentViewDelegate,AMapSearchDelegate,UISearchResultsUpdating,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,RWDropdownMenuDelegate>
 /**标注数组*/
 @property (nonatomic, strong) NSArray *anns;
 /// 地图控件
@@ -25,9 +28,44 @@
 @property (nonatomic, strong) CustomAnnotationView *deslectedCustomAnnView;
 /// 团队详情视图
 @property (nonatomic, strong) TeamInfoContentView *teamInfoView;
+
+/// 搜索类
+@property (nonatomic, strong) AMapSearchAPI *search;
+/// 当前关键字搜索
+@property (nonatomic, strong) AMapPOIKeywordsSearchRequest *currentRequest;
+///
+@property (nonatomic, strong) UISearchController *searchController;
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) NSMutableArray *tips;
+/// 菜单视图
+@property (nonatomic, strong) NSArray *menuItems;
+@property (nonatomic, assign) RWDropdownMenuStyle menuStyle;
 @end
 
 @implementation ViewController
+#pragma mark ----- 懒加载
+- (NSArray *)menuItems
+{
+    if (!_menuItems)
+    {
+        _menuItems =
+        @[
+          [RWDropdownMenuItem itemWithText:@"Twitter" image:[UIImage imageNamed:@"AddToFavouritesIcn"] action:nil],
+          [RWDropdownMenuItem itemWithText:@"Facebook" image:[UIImage imageNamed:@"AddToFriendsIcn"] action:nil],
+          [RWDropdownMenuItem itemWithText:@"Message" image:[UIImage imageNamed:@"LikeIcn"] action:nil],
+          [RWDropdownMenuItem itemWithText:@"Email" image:[UIImage imageNamed:@"SendMessageIcn"] action:nil]
+          ];
+        
+    }
+    return _menuItems;
+}
+
+- (NSMutableArray *)tips {
+    if (_tips == nil) {
+        _tips = [NSMutableArray array];
+    }
+    return _tips;
+}
 - (NSArray *)anns {
     if (_anns == nil) {
         _anns = [NSMutableArray array];
@@ -57,15 +95,61 @@
     return _gpsButton;
 }
 
+#pragma mark ----- 生命周期
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self initMapView];
+    
+    [self initOtherViews];
+    
     [self setupModels];
+    
+    [self initSearch];
+    
+    [self initTableView];
+    
+    [self initSearchController];
+    
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    self.searchController.active = NO;
+}
+#pragma mark ----- 初始化方法
+
+- (void)initTableView
+{
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height - 64) style:UITableViewStylePlain];
+    self.tableView.tag = 1;
+    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.hidden = YES;
+    
+    [self.view addSubview:self.tableView];
+}
+
+- (void)initSearchController
+{
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.dimsBackgroundDuringPresentation = NO;
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
+    
+    self.searchController.searchBar.delegate = self;
+    self.searchController.searchBar.placeholder = @"请输入关键字";
+    [self.searchController.searchBar sizeToFit];
+    [self.searchController.searchBar setValue:@"取消" forKey:@"_cancelButtonText"];
+    
+    self.navigationItem.titleView = self.searchController.searchBar;
+}
 
 /// 初始化地图
 - (void) initMapView {
@@ -76,6 +160,7 @@
     self.mapView.delegate = self;
     // 当前地图的中心点
     self.mapView.centerCoordinate = CLLocationCoordinate2DMake(self.mapView.userLocation.location.coordinate.latitude, self.mapView.userLocation.location.coordinate.longitude);
+    
     // 是否显示用户位置
     self.mapView.showsUserLocation = YES;
     // 设置初始缩放等级
@@ -90,7 +175,11 @@
     self.mapView.showsScale = NO;
     [self.view addSubview:self.mapView];
     [self.view sendSubviewToBack:self.mapView];
-    
+
+}
+
+// 添加地图上的其他组件
+- (void) initOtherViews {
     // 添加定位按钮
     [self.view addSubview:self.gpsButton];
     
@@ -102,10 +191,17 @@
     
     [self.view addSubview:self.teamInfoView];
     
-
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"classify"] style:UIBarButtonItemStylePlain target:self action:@selector(classifyBtnClick:)];
 }
 
-// 设置model
+/// 初始化搜索
+- (void) initSearch {
+    
+    self.search = [[AMapSearchAPI alloc] init];
+    self.search.delegate = self;
+    
+}
+// 初始化假数据
 - (NSArray *) setupModels {
     
     CustomAnnotation *one = [[CustomAnnotation alloc] init];
@@ -232,13 +328,21 @@
     
     return ret;
 }
+
 #pragma mark ----- 事件
+/// 分类
+- (void) classifyBtnClick:(id) sender {
+    
+    RWDropdownMenuCellAlignment alignment = RWDropdownMenuCellAlignmentCenter;
+    alignment = RWDropdownMenuCellAlignmentRight;
+    [RWDropdownMenu presentFromViewController:self withItems:self.menuItems align:alignment style:self.menuStyle navBarImage:[sender image] delegate:self completion:nil];
+}
 
 /// 定位
 - (void) gpsAction {
     
     if (self.mapView.userLocation.updating && self.mapView.userLocation.location) {
-        NSLog(@"located");
+        NSLog(@"located%f%f",self.mapView.userLocation.location.coordinate.latitude,self.mapView.userLocation.location.coordinate.longitude);
         [self.mapView setCenterCoordinate:self.mapView.userLocation.location.coordinate animated:YES];
         [self.mapView setZoomLevel:15 animated:YES];
        
@@ -262,6 +366,35 @@
     [self.mapView setZoomLevel:(oldZoom - 1) animated:YES];
 
 }
+
+
+/// 搜索 输入提示
+- (void) searchTipsWithKey:(NSString *) key {
+    if (key.length == 0) {
+        return;
+    }
+    AMapInputTipsSearchRequest *tips = [[AMapInputTipsSearchRequest alloc] init];
+    // 搜索关键词
+    tips.keywords = key;
+    // 当前搜索的城市
+    tips.city = @"上海";
+    // 搜索限制为当前城市
+    tips.cityLimit = YES;
+ 
+    [self.search AMapInputTipsSearch:tips];
+}
+
+/// 根据tip搜索周边poi数据
+- (void) searchPOIWithTip:(AMapTip *) tip {
+    AMapPOIKeywordsSearchRequest * request = [[AMapPOIKeywordsSearchRequest alloc] init];
+    request.cityLimit = YES;
+    request.keywords = tip.name;
+    request.city = @"上海";
+    // 返回扩展消息
+    request.requireExtension = YES;
+    [self.search AMapPOIKeywordsSearch:request];
+}
+
 #pragma mark ----- MAmapViewDelegate 
 /**
  * @brief 地图将要发生移动时调用此接口
@@ -272,9 +405,9 @@
     if (wasUserAction) {
         // 隐藏详情view
         [self.teamInfoView hidDetailViewAnimation];
-        
         // 取消之前选中的标注
         [self.selectedCustomAnnView stopAnimation];
+        self.teamInfoView.userInteractionEnabled = NO;
     }
 }
 /**
@@ -296,6 +429,7 @@
 - (void)mapView:(MAMapView *)mapView mapWillZoomByUser:(BOOL)wasUserAction {
     if (wasUserAction) {
         [self.teamInfoView hidDetailViewAnimation];
+        self.teamInfoView.userInteractionEnabled = NO;
     }
 }
 
@@ -320,6 +454,7 @@
         //很重要的，配置关联的模型数据
         cusAnnotationView.annotation = cusAnnotation;
         return cusAnnotationView;
+        
     } else if ([annotation isKindOfClass:[MAPointAnnotation class]]) {
         static NSString *userLocationID = @"lockLocation";
         MAAnnotationView *lockedAnnotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:userLocationID];
@@ -328,6 +463,20 @@
         }
         lockedAnnotationView.image = [UIImage imageNamed:@""];
         return lockedAnnotationView;
+    } else if ([annotation isKindOfClass:[POIAnnotation class]] || [annotation isKindOfClass:[TipAnnotation class]]) {
+        
+        static NSString *tipIdentifier = @"poiIdentifier";
+        
+        MAPinAnnotationView *poiAnnotationView = (MAPinAnnotationView*)[self.mapView dequeueReusableAnnotationViewWithIdentifier:tipIdentifier];
+        if (poiAnnotationView == nil)
+        {
+            poiAnnotationView = [[MAPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:tipIdentifier];
+        }
+        
+        poiAnnotationView.canShowCallout = YES;
+        
+        return poiAnnotationView;
+        
     }
 
 
@@ -353,9 +502,9 @@
         CustomAnnotationView *annotationView = (CustomAnnotationView *) view;
         
         if ([annotationView.annotation isKindOfClass:[CustomAnnotation class]]) {
-            
+            // 开启交互 防止影响详情视图的滑动事件
+            self.teamInfoView.userInteractionEnabled = YES;
             CustomAnnotation *ann = (CustomAnnotation *) annotationView.annotation;
-            
             self.selectedCustomAnnView = annotationView;
             // 标注动画
             [annotationView startAnimation];
@@ -387,7 +536,8 @@
             
             NSLog(@"取消点击了 %@",ann.imagePath);
         }
-        
+        self.teamInfoView.userInteractionEnabled = NO;
+
    
     }}
 
@@ -424,6 +574,9 @@
  */
 - (void)mapView:(MAMapView *)mapView didSingleTappedAtCoordinate:(CLLocationCoordinate2D)coordinate {
     [self.teamInfoView hidDetailViewAnimation];
+    // 关闭交互 防止影响标注的点击
+    self.teamInfoView.userInteractionEnabled = NO;
+
 }
 
 #pragma mark ----- TeamInfoContentViewDelegate
@@ -436,4 +589,97 @@
 //    NSLog(@"%s %ld %d",__FUNCTION__,(long)index,wasByUser);
 }
 
+#pragma mark ----- AMapSearchDelegate
+- (void) AMapSearchRequest:(id)request didFailWithError:(NSError *)error {
+    NSLog(@"error %@", error);
+}
+/// 输入提示回调
+- (void)onInputTipsSearchDone:(AMapInputTipsSearchRequest *)request response:(AMapInputTipsSearchResponse *)response {
+    if (response.count == 0) {
+        return;
+    }
+    [self.tips setArray:response.tips];
+    [self.tableView reloadData];
+}
+/// POI 搜索回调
+- (void)onPOISearchDone:(AMapPOISearchBaseRequest *)request response:(AMapPOISearchResponse *)response {
+    
+    if (response.pois.count == 0) {
+        return;
+    }
+    NSMutableArray *poiAnnotations = [NSMutableArray arrayWithCapacity:response.pois.count];
+    [response.pois enumerateObjectsUsingBlock:^(AMapPOI * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [poiAnnotations addObject:[[POIAnnotation alloc] initWithPOI:obj]];
+    }];
+    
+    // 将结果以annotation的形式加载到地图上
+    [self.mapView addAnnotations:poiAnnotations];
+    
+    // 如果只有一个结果，设置其为中心点
+    if (poiAnnotations.count == 1) {
+        [self.mapView setCenterCoordinate:[poiAnnotations[0] coordinate]];
+    } else {
+        // 多个结果，设置地图所有annotation都可见
+        [self.mapView showAnnotations:poiAnnotations animated:NO];
+        
+    }
+    
+}
+#pragma mark ----- UISearchResultsUpdating
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    self.tableView.hidden = !searchController.isActive;
+    NSLog(@"%d",searchController.isActive);
+    [self searchTipsWithKey:searchController.searchBar.text];
+    self.navigationItem.rightBarButtonItem = searchController.isActive ? nil : [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"classify"] style:UIBarButtonItemStylePlain target:self action:@selector(classifyBtnClick:)];
+}
+
+#pragma mark ----- UITableViewDataSource
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.tips.count;
+   
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *rid = @"cellId";
+    UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:rid];
+    if(cell==nil){
+        cell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle      reuseIdentifier:rid];
+    }
+    AMapTip *tip = self.tips[indexPath.row];
+    cell.textLabel.text = tip.name;
+    cell.detailTextLabel.text = tip.address;
+    return cell;
+
+}
+#pragma mark ----- UITableViewDelegate
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 44;
+    
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.mapView.annotations enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[CustomAnnotation class]] || [obj isKindOfClass:[MAPointAnnotation class]]) {
+            return ;
+        }
+        [self.mapView removeAnnotation:obj];
+    }];
+    
+    AMapTip *tip = self.tips[indexPath.row];
+    if (tip.uid != nil && tip.location != nil) {
+        TipAnnotation *annotation = [[TipAnnotation alloc] initWithMapTip:tip];
+        [self.mapView addAnnotation:annotation];
+        [self.mapView setCenterCoordinate:annotation.coordinate];
+        [self.mapView selectAnnotation:annotation animated:YES];
+        NSLog(@"搜索后的经纬度 == %f %f",annotation.coordinate.latitude,annotation.coordinate.longitude);
+    } else {
+        [self searchPOIWithTip:tip];
+    }
+    
+    self.searchController.active = NO;
+    
+    
+}
+#pragma mark ----- RWDropdownMenuDelegate
+- (void)dropdownMenu:(RWDropdownMenu *)menu didSelectMenuItemAtIndex:(NSInteger)index {
+    NSLog(@"%ld",index);
+}
 @end
