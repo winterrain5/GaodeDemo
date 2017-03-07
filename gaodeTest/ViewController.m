@@ -189,6 +189,7 @@
     // 添加固定标注
     [self addtMoveAnotationView];
     
+    self.teamInfoView.userInteractionEnabled = NO;
     [self.view addSubview:self.teamInfoView];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"classify"] style:UIBarButtonItemStylePlain target:self action:@selector(classifyBtnClick:)];

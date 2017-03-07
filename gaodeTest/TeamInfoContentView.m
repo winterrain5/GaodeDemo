@@ -116,6 +116,9 @@
         cell = [[TeamInfoCollectionViewCell alloc] init];
     }
     cell.imageName = self.dataArray[indexPath.row];
+    cell.checkAptitudeBlock = ^() {
+        NSLog(@"查了");
+    };
     return cell;
 }
 

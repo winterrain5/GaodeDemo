@@ -10,7 +10,7 @@
 #import "CustomAnnotation.h"
 #import "CustomAnnotationView.h"
 #import "CustomCalloutView.h"
-#import "DetailViewController.h"
+#import "RouteMapController.h"
 #define kCalloutViewMargin  -12
 @interface SecondViewController ()<MAMapViewDelegate,CustomCalloutViewDelegate>
 /**标注数组*/
@@ -23,6 +23,8 @@
 @property (nonatomic, strong) MAPointAnnotation *moveAnnotation;
 /// 自定义calloutView
 @property (nonatomic, strong) CustomCalloutView *calloutView;
+/// 选中的标注
+@property (nonatomic, strong) CustomAnnotationView *selectedCustomAnnView;
 @end
 
 @implementation SecondViewController
@@ -56,7 +58,18 @@
     
     [self addtMoveAnotationView];
 }
-
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    // 可降低内存的暴增
+    self.mapView.showsUserLocation = NO;
+    self.mapView.delegate = nil;
+    
+}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+     self.mapView.delegate = self;
+    self.mapView.showsUserLocation = YES;
+}
 #pragma mark ----- 初始化组件
 
 /// 初始化地图
@@ -65,12 +78,12 @@
     // 添加地图
     self.mapView = [[MAMapView alloc] initWithFrame:CGRectMake(0, 60, MainScreenW, MainScreenH - 60)];
     self.mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    self.mapView.delegate = self;
+   
     // 当前地图的中心点
     self.mapView.centerCoordinate = CLLocationCoordinate2DMake(self.mapView.userLocation.location.coordinate.latitude, self.mapView.userLocation.location.coordinate.longitude);
     
     // 是否显示用户位置
-    self.mapView.showsUserLocation = YES;
+    
     // 设置初始缩放等级
     [self.mapView setZoomLevel:15 animated:YES];
     // 设置trackingMode 则会自动定位到自己的位置
@@ -180,7 +193,7 @@
     CustomAnnotation *fifteen = [[CustomAnnotation alloc] init];
     fifteen.type = CustomAnnotationTypeOne;
     fifteen.imagePath = @"gou.jpg";
-    fifteen.coordinate = CLLocationCoordinate2DMake(31.341321, 121.378819);
+    fifteen.coordinate = CLLocationCoordinate2DMake(31.243458, 121.425137);
     
     
     NSArray *annsArray = @[one,two,three,four,five,six,seven,eight,nine,ten,eleven,tewlve,thirdteen,fourteen,fifteen];
@@ -307,6 +320,7 @@
         if ([annotationView.annotation isKindOfClass:[CustomAnnotation class]]) {
             
             CustomAnnotation *ann = (CustomAnnotation *) annotationView.annotation;
+            self.selectedCustomAnnView = annotationView;
             // 标注动画
             [annotationView startAnimation];
             // 详情动画
@@ -337,8 +351,13 @@
 
 #pragma mark ----- CustomCalloutViewDelgate
 - (void)detailButtonClicked:(UIButton *)sender calloutView:(CustomCalloutView *)calloutView customAnn:(CustomAnnotation *)ann{
-    DetailViewController *vc = [[DetailViewController alloc] init];
-    vc.customAnn = ann;
+    
+    [self.calloutView dismissCalloutView];
+    [self.selectedCustomAnnView stopAnimation];
+    
+    RouteMapController *vc = [[RouteMapController alloc] init];
+    vc.startCoordinate = self.mapView.userLocation.coordinate;
+    vc.destinaCoordinate = ann.coordinate;
     [self.navigationController pushViewController:vc animated:YES];
 }
 @end

@@ -6,4 +6,5 @@ pod 'AMapSearch'
 pod 'AMapLocation'
 pod 'pop'
 pod 'PureLayout'
+pod 'Masonry'
 end
