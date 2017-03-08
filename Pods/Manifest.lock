@@ -6,7 +6,10 @@ PODS:
     - AMapFoundation (~> 1.3)
   - AMapSearch (4.4.1):
     - AMapFoundation (~> 1.2)
+  - FBRetainCycleDetector (0.1.3)
   - Masonry (1.0.2)
+  - MLeaksFinder (0.2.1):
+    - FBRetainCycleDetector
   - pop (1.0.9)
   - PureLayout (3.0.2)
 
@@ -15,6 +18,7 @@ DEPENDENCIES:
   - AMapLocation
   - AMapSearch
   - Masonry
+  - MLeaksFinder
   - pop
   - PureLayout
 
@@ -23,10 +27,12 @@ SPEC CHECKSUMS:
   AMapFoundation: c086329a1f19afec00e4c197863665235eb43dc2
   AMapLocation: 5fb51fe0e35e68a899199651942e6234d6257d91
   AMapSearch: 16a50b493ad419e8b6b81bafdeca7570db52f28e
+  FBRetainCycleDetector: f0c7b290bf48ae77f6ae060843ce34ae341781eb
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
+  MLeaksFinder: 0850e2f2abc7227adc4d4e2d1992b431264eb4d5
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
 
-PODFILE CHECKSUM: 6c80c47718a01de086bcae77bf857b15201cce7f
+PODFILE CHECKSUM: 434277a5b1a8b3562a6381e9f1604c0914d5d46f
 
 COCOAPODS: 1.2.0.beta.1

@@ -14,8 +14,7 @@
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import <MAMapKit/MAMapKit.h>
 #import <AMapSearchKit/AMapSearchKit.h>
-#import "AppMacro.h"
 #import <pop/POP.h>
 #import "D3View.h"
-
+#import "AppMacro.h"
 #endif /* PrefixHeader_pch */

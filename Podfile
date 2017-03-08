@@ -7,4 +7,5 @@ pod 'AMapLocation'
 pod 'pop'
 pod 'PureLayout'
 pod 'Masonry'
+pod 'MLeaksFinder'
 end

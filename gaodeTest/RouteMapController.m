@@ -14,12 +14,13 @@
 #import "RoutePathDetailView.h"
 #import <Masonry.h>
 #import "YBPopupMenu.h"
+#import "DropdownMenu.h"
 
 static const NSInteger RoutePlanningPaddingEdge = 20;
 static const NSString *RoutePlanningViewControllerStartTitle = @"起点";
 static const NSString *RoutePlanningViewControllerDestinationTitle = @"终点";
 
-@interface RouteMapController ()<MAMapViewDelegate,AMapSearchDelegate,YBPopupMenuDelegate>
+@interface RouteMapController ()<MAMapViewDelegate,AMapSearchDelegate,YBPopupMenuDelegate,DropdownMenuDelegate,DropdownMenuDataSource>
 @property (strong,nonatomic) MAMapView *mapView;
 /// 搜索类
 @property (nonatomic, strong) AMapSearchAPI *search;
@@ -63,6 +64,7 @@ static MANaviAnnotationType naviType;
     [self resetSearchResultToDefault];
     [self addDefaultAnnotaitions];
     [self searchRoutePlaningDrive];
+    [self initDropDownMenu];
     
 }
 - (void)viewWillDisappear:(BOOL)animated {
@@ -72,7 +74,15 @@ static MANaviAnnotationType naviType;
     
 }
 #pragma mark ----- 初始化
-
+- (void) initDropDownMenu {
+    
+    DropdownMenu *menu = [[DropdownMenu alloc] initWithNavigationController:self.navigationController];
+    menu.dataSource = self;
+    menu.delegate = self;
+    menu.menuTitle = @"订单详情";
+    self.navigationItem.titleView = menu;
+    
+}
 - (void) initMenuButton{
     self.menuBtn = [[UIButton alloc] init];
     [self.menuBtn setImage:[UIImage imageNamed:@"route_classify"] forState:UIControlStateNormal];
@@ -389,6 +399,14 @@ static MANaviAnnotationType naviType;
     }
     [self searchRoutePlaningDrive];
 }
+
+#pragma mark ----- dropDownMenuDatasource 
+- (NSArray<NSString *> *)titleArrayForNavigationDropdownMenu:(DropdownMenu *)navigationDropdownMenu {
+    return @[@"Hello", @"World",@"Hello", @"World",@"Hello", @"World",@"Hello", @"World"];
+}
+
+
+
 #pragma mark ----- action
 // 显示路径规划详情
 - (void) presentRouteDetailInfo {
@@ -414,4 +432,6 @@ static MANaviAnnotationType naviType;
     NSArray *titles = @[@"驾车",@"公交",@"骑行"];
     [YBPopupMenu showRelyOnView:sender titles:titles icons:nil menuWidth:80 delegate:self];
 }
+
+
 @end

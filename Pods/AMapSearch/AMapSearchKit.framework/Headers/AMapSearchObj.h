@@ -88,7 +88,7 @@ typedef NS_ENUM(NSInteger, AMapRoutePOISearchType)
 @property (nonatomic, copy)   AMapGeoPoint *destination; //!< 中心点坐标
 @property (nonatomic, assign) AMapRoutePOISearchType searchType; //!< 搜索类型
 @property (nonatomic, assign) NSInteger strategy; //!< 驾车导航策略，同驾车路径规划请求的策略（5 多策略除外） AMapDrivingRouteSearchRequest 。
-@property (nonatomic, assign) NSInteger range; //!< 道路周围搜索范围,单位米,[0-500]，默认250。
+@property (nonatomic, assign) NSInteger ranges; //!< 道路周围搜索范围,单位米,[0-500]，默认250。
 
 @end
 
